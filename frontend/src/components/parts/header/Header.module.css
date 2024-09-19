@@ -1,0 +1,14 @@
+.ribbon {
+    background-color: rgb(64, 64, 64);
+    width: 100%;
+}
+.heading {
+    padding-left: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 40px;
+    color: rgb(189, 189, 189);
+}
+.heading p {
+    margin: 0;
+}
