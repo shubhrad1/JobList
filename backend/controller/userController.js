@@ -1,19 +1,8 @@
 const User = require("../models/User");
 
-const createUser = async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-        const user = new User({
-            name,
-            email,
-            password,
-        });
-        await user.save();
-        res.status(201).json({ message: "User created successfully" });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
+const dotenv = require("dotenv");
+dotenv.config();
+
 const getUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -36,6 +25,5 @@ const getUserbyID = async (req, res) => {
 
 //Exports
 
-exports.createUser = createUser;
 exports.getUserbyID = getUserbyID;
 exports.getUsers = getUsers;
