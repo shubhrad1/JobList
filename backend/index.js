@@ -7,6 +7,8 @@ const userController = require("./controller/userController");
 const recruiterController = require("./controller/recruiterController");
 const signUpController = require("./controller/authController");
 const signInController = require("./controller/authController");
+const jobController = require("./controller/jobController");
+const applicationController = require("./controller/applicationController");
 
 const app = express(); // Initialize express
 
@@ -69,6 +71,37 @@ v1Router.post("/postRecruiterData", (req, res) => {
 });
 v1Router.patch("/updateRecruiterData", (req, res) => {
     recruiterController.updateRecruiterData(req, res);
+});
+
+//Job Routes
+v1Router.get("/getJob/:id", (req, res) => {
+    jobController.getJobbyID(req, res);
+});
+v1Router.get("/getJobs", (req, res) => {
+    jobController.getJobs(req, res);
+});
+v1Router.post("/postJob", (req, res) => {
+    jobController.postJob(req, res);
+});
+v1Router.patch("/updateJob", (req, res) => {
+    jobController.updateJob(req, res);
+});
+v1Router.delete("/deleteJob", (req, res) => {
+    jobController.deleteJob(req, res);
+});
+
+//Application Routes
+v1Router.get("/user/getApplication", (req, res) => {
+    applicationController.getApplicationsbyUserID(req, res);
+});
+v1Router.get("/job/getApplication", (req, res) => {
+    applicationController.getApplicationsbyJobID(req, res);
+});
+v1Router.post("/postApplication", (req, res) => {
+    applicationController.postApplication(req, res);
+});
+v1Router.patch("/updateApplication", (req, res) => {
+    applicationController.updateApplication(req, res);
 });
 
 app.use("/api/v1", v1Router);

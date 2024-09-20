@@ -1,9 +1,6 @@
 const Recruiter = require("../models/Recruiter");
 const RecruiterData = require("../models/recruiterData");
 
-const dotenv = require("dotenv");
-dotenv.config();
-
 const getRecruiters = async (req, res) => {
     try {
         const Recruiters = await Recruiter.find();

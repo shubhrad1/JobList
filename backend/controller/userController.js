@@ -1,9 +1,6 @@
 const User = require("../models/User");
 const UserData = require("../models/UserData");
 
-const dotenv = require("dotenv");
-dotenv.config();
-
 const getUsers = async (req, res) => {
     try {
         const users = await User.find();
