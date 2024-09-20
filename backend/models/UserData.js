@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 const educationSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     institute: {
         type: String,
         required: true,

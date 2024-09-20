@@ -25,6 +25,11 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    recruiterId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Recruiter",
+        required: true,
+    },
 });
 
 const Job = mongoose.model("Job", jobSchema);

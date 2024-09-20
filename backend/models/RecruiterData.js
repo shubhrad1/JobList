@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Recruiter = require("./Recruiter");
 
 const recruiterDataSchema = new mongoose.Schema({
     recruiterId: {

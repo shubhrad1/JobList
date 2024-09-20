@@ -38,6 +38,15 @@ v1Router.post("/user/signUp", (req, res) => {
 v1Router.post("/user/signIn", (req, res) => {
     signInController.signIn(req, res, false);
 });
+v1Router.get("/getUserData", (req, res) => {
+    userController.getUserData(req, res);
+});
+v1Router.post("/postUserData", (req, res) => {
+    userController.postUserData(req, res);
+});
+v1Router.patch("/updateUserData", (req, res) => {
+    userController.updateUserData(req, res);
+});
 
 //Recruiter Routes
 v1Router.get("/getRecruiters", (req, res) => {
@@ -51,6 +60,15 @@ v1Router.post("/recruiter/signUp", (req, res) => {
 });
 v1Router.post("/recruiter/signIn", (req, res) => {
     signInController.signIn(req, res, true);
+});
+v1Router.get("/getRecruiterData", (req, res) => {
+    recruiterController.getRecruiterData(req, res);
+});
+v1Router.post("/postRecruiterData", (req, res) => {
+    recruiterController.postRecruiterData(req, res);
+});
+v1Router.patch("/updateRecruiterData", (req, res) => {
+    recruiterController.updateRecruiterData(req, res);
 });
 
 app.use("/api/v1", v1Router);
