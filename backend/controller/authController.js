@@ -28,9 +28,9 @@ const signUp = async (req, res, role) => {
 
         await user.save();
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
+            expiresIn: "7d",
         });
-        res.status(201).json({ token });
+        res.status(201).json({ token, userId: user._id, name: user.name });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -57,9 +57,9 @@ const signIn = async (req, res, role) => {
             return res.status(400).json({ message: "Invalid credentials" });
         }
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
+            expiresIn: "7d",
         });
-        res.json({ token });
+        res.json({ token, userId: user._id, name: user.name });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

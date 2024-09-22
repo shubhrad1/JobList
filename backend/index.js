@@ -9,6 +9,7 @@ const signUpController = require("./controller/authController");
 const signInController = require("./controller/authController");
 const jobController = require("./controller/jobController");
 const applicationController = require("./controller/applicationController");
+const authentication = require("./middlewares/authentication");
 
 const app = express(); // Initialize express
 
@@ -28,7 +29,7 @@ v1Router.get("/healthz", (req, res) => {
 });
 
 //User Routes
-v1Router.get("/getUser/:id", (req, res) => {
+v1Router.get("/getUser", authentication, (req, res) => {
     userController.getUserbyID(req, res);
 });
 v1Router.get("/getUsers", (req, res) => {
@@ -104,12 +105,15 @@ v1Router.patch("/updateApplication", (req, res) => {
     applicationController.updateApplication(req, res);
 });
 
+//Mounting Router
 app.use("/api/v1", v1Router);
 
+//Error Handling
 app.all("*", (req, res) => {
     res.status(404).json({ message: "Route not found" });
 });
 
+//Server
 app.listen(PORT, () => {
     try {
         console.log("[SERVER] Server started on PORT:", PORT);
