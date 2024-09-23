@@ -17,6 +17,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { jwtDecode } from "jwt-decode";
+
 const BASE_URL = "/api/v1";
 
 const Login = () => {
@@ -49,9 +51,14 @@ const Login = () => {
                 })
                 .then((response) => {
                     if (response.status === 200) {
+                        const decoded = jwtDecode(response.data.token);
+                        const role = JSON.stringify(decoded.recruiter);
+
                         sessionStorage.setItem("token", response.data.token);
                         sessionStorage.setItem("id", response.data.userId);
                         sessionStorage.setItem("name", response.data.name);
+                        sessionStorage.setItem("email", response.data.email);
+                        sessionStorage.setItem("role", role);
                         if (remember) {
                             setCookie("token", response.data.token, {
                                 maxAge: 60 * 60 * 24 * 7,

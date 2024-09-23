@@ -14,6 +14,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const BASE_URL = "/api/v1";
 
@@ -49,9 +50,11 @@ const SignUp = () => {
                 })
                 .then((response) => {
                     if (response.status === 201) {
+                        const decoded = jwtDecode(response.data.token);
                         sessionStorage.setItem("token", response.data.token);
                         sessionStorage.setItem("id", response.data.userId);
                         sessionStorage.setItem("name", response.data.name);
+                        sessionStorage.setItem("role", decoded.recruiter);
                         navigate("/");
                     } else {
                         console.log("Error", response.data.message);

@@ -10,7 +10,7 @@ const getJobs = async (req, res) => {
 };
 const getJobbyID = async (req, res) => {
     try {
-        const job = await Job.findById(req.params.id);
+        const job = await Job.find({ recruiterId: req.user.userId });
         if (!job) {
             return res.status(404).json({ message: "Job not found" });
         }
@@ -31,17 +31,21 @@ const postJob = async (req, res) => {
         recruiterId,
     } = req.body;
     try {
-        const job = new Job({
-            company: company,
-            position: position,
-            location: location,
-            currency: currency,
-            salary: salary,
-            description: description,
-            recruiterId: recruiterId,
-        });
-        await job.save();
-        res.status(201).json({ message: "Job posted successfully" });
+        if (req.user.recruiter === true) {
+            const job = new Job({
+                company: company,
+                position: position,
+                location: location,
+                currency: currency,
+                salary: salary,
+                description: description,
+                recruiterId: recruiterId,
+            });
+            await job.save();
+            res.status(201).json({ message: "Job posted successfully" });
+        } else {
+            res.status(401).json({ message: "Not authorized" });
+        }
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

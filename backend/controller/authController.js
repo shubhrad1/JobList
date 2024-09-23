@@ -38,6 +38,7 @@ const signUp = async (req, res, role) => {
             token,
             userId: user._id,
             name: user.name,
+            emsil: user.email,
             role: role,
         });
     } catch (err) {
@@ -72,7 +73,13 @@ const signIn = async (req, res, role) => {
                 expiresIn: "7d",
             }
         );
-        res.json({ token, userId: user._id, name: user.name, role: role });
+        res.json({
+            token,
+            userId: user._id,
+            name: user.name,
+            email: user.email,
+            role: role,
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

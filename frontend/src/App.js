@@ -6,8 +6,10 @@ import Header from "./components/parts/header/Header";
 import Login from "./components/pages/Login/Login";
 import SignUp from "./components/pages/SignUp/SignUp";
 import Jobs from "./components/pages/Jobs/Jobs";
+import Profile from "./components/pages/Profile/Profile";
 import LoginRecruiter from "./components/pages/LoginRecruiter/LoginRecruiter";
 import SignUpRecruiter from "./components/pages/SignUpRecruiter/SignUpRecruiter";
+import PostJobs from "./components/pages/PostJobs/PostJobs";
 
 function App() {
     return (
@@ -19,6 +21,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/postJobs" element={<PostJobs />} />
                     <Route
                         path="/recruiterSignIn"
                         element={<LoginRecruiter />}

@@ -23,8 +23,17 @@ const getUserbyID = async (req, res) => {
 };
 const getUserData = async (req, res) => {
     try {
-        const UserData = await UserData.find();
-        res.json(UserData);
+        const userData = await UserData.find();
+        res.json(userData);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+const getUserDatabyID = async (req, res) => {
+    const userId = req.body.userId;
+    try {
+        const userData = await UserData.findOne({ userId: userId });
+        res.status(200).json(userData);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -65,6 +74,7 @@ const updateUserData = async (req, res) => {
 
 //Exports
 
+exports.getUserDatabyID = getUserDatabyID;
 exports.getUserbyID = getUserbyID;
 exports.getUsers = getUsers;
 exports.getUserData = getUserData;

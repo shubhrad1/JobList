@@ -11,21 +11,23 @@ import {
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const Header = () => {
     const cookies = new Cookies();
     const token = cookies.get("token")
         ? cookies.get("token")
         : sessionStorage.getItem("token");
-    const role = cookies.get("role")
-        ? cookies.get("role")
+    const role = token
+        ? JSON.stringify(jwtDecode(token).recruiter)
         : sessionStorage.getItem("role");
     const [user, setUser] = React.useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const getUser = async () => {
-            const URL = role ? "/api/v1/getRecruiter" : "/api/v1/getUser";
+            const URL =
+                role === "true" ? "/api/v1/getRecruiter" : "/api/v1/getUser";
             if (token) {
                 const header = "token " + token;
                 try {
@@ -35,6 +37,10 @@ const Header = () => {
                         },
                     });
                     setUser(response.data);
+                    sessionStorage.setItem("id", response.data._id);
+                    sessionStorage.setItem("name", response.data.name);
+                    sessionStorage.setItem("email", response.data.email);
+                    sessionStorage.setItem("role", role);
                 } catch (error) {
                     console.log("Error", error);
                 }
@@ -56,6 +62,7 @@ const Header = () => {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");
+        sessionStorage.removeItem("email");
         sessionStorage.removeItem("role");
         cookies.remove("role");
         cookies.remove("token");
@@ -104,7 +111,7 @@ const Header = () => {
                 </div>
             );
         } else {
-            if (!role) {
+            if (role === "false") {
                 return (
                     <div
                         style={{

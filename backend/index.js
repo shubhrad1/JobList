@@ -41,8 +41,11 @@ v1Router.post("/user/signUp", (req, res) => {
 v1Router.post("/user/signIn", (req, res) => {
     signInController.signIn(req, res, false);
 });
-v1Router.get("/getUserData", (req, res) => {
+v1Router.get("/getUserDatas", (req, res) => {
     userController.getUserData(req, res);
+});
+v1Router.get("/getUserData", (req, res) => {
+    userController.getUserDatabyID(req, res);
 });
 v1Router.post("/postUserData", (req, res) => {
     userController.postUserData(req, res);
@@ -75,13 +78,13 @@ v1Router.patch("/updateRecruiterData", (req, res) => {
 });
 
 //Job Routes
-v1Router.get("/getJob/:id", (req, res) => {
+v1Router.get("/getJob", authentication, (req, res) => {
     jobController.getJobbyID(req, res);
 });
 v1Router.get("/getJobs", (req, res) => {
     jobController.getJobs(req, res);
 });
-v1Router.post("/postJob", (req, res) => {
+v1Router.post("/postJob", authentication, (req, res) => {
     jobController.postJob(req, res);
 });
 v1Router.patch("/updateJob", (req, res) => {
