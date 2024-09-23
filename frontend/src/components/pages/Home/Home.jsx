@@ -1,7 +1,5 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import { Cookies } from "react-cookie";
-import axios from "axios";
 
 const Home = () => {
     return (

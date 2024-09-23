@@ -52,9 +52,13 @@ const SignUp = () => {
                         sessionStorage.setItem("token", response.data.token);
                         sessionStorage.setItem("id", response.data.userId);
                         sessionStorage.setItem("name", response.data.name);
+                        navigate("/");
                     } else {
                         console.log("Error", response.data.message);
                     }
+                })
+                .catch((error) => {
+                    console.log("Error", error);
                 });
         } catch (error) {
             Alert("Error", error);

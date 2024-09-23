@@ -27,9 +27,13 @@ const signUp = async (req, res, role) => {
         user.password = await bcrypt.hash(password, salt);
 
         await user.save();
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-            expiresIn: "7d",
-        });
+        const token = jwt.sign(
+            { userId: user._id, recruiter: role },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "7d",
+            }
+        );
         res.status(201).json({ token, userId: user._id, name: user.name });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -56,9 +60,13 @@ const signIn = async (req, res, role) => {
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-            expiresIn: "7d",
-        });
+        const token = jwt.sign(
+            { userId: user._id, recruiter: role },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "7d",
+            }
+        );
         res.json({ token, userId: user._id, name: user.name });
     } catch (err) {
         res.status(500).json({ message: err.message });
