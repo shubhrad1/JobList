@@ -9,7 +9,7 @@ const signUp = async (req, res, role) => {
     try {
         const { name, email, password } = req.body;
         var user;
-        if (role == true) {
+        if (role === true) {
             user = new Recruiter({
                 name,
                 email,
@@ -34,7 +34,12 @@ const signUp = async (req, res, role) => {
                 expiresIn: "7d",
             }
         );
-        res.status(201).json({ token, userId: user._id, name: user.name });
+        res.status(201).json({
+            token,
+            userId: user._id,
+            name: user.name,
+            role: role,
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -43,7 +48,7 @@ const signIn = async (req, res, role) => {
     try {
         const { email, password } = req.body;
         var user;
-        if (role == true) {
+        if (role === true) {
             user = await Recruiter.findOne({
                 email,
             });
@@ -67,7 +72,7 @@ const signIn = async (req, res, role) => {
                 expiresIn: "7d",
             }
         );
-        res.json({ token, userId: user._id, name: user.name });
+        res.json({ token, userId: user._id, name: user.name, role: role });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

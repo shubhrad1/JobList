@@ -55,7 +55,7 @@ v1Router.patch("/updateUserData", (req, res) => {
 v1Router.get("/getRecruiters", (req, res) => {
     recruiterController.getRecruiters(req, res);
 });
-v1Router.get("/getRecruiter/:id", (req, res) => {
+v1Router.get("/getRecruiter", authentication, (req, res) => {
     recruiterController.getRecruiterbyID(req, res);
 });
 v1Router.post("/recruiter/signUp", (req, res) => {

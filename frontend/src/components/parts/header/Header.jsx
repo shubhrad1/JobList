@@ -17,15 +17,19 @@ const Header = () => {
     const token = cookies.get("token")
         ? cookies.get("token")
         : sessionStorage.getItem("token");
+    const role = cookies.get("role")
+        ? cookies.get("role")
+        : sessionStorage.getItem("role");
     const [user, setUser] = React.useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const getUser = async () => {
+            const URL = role ? "/api/v1/getRecruiter" : "/api/v1/getUser";
             if (token) {
                 const header = "token " + token;
                 try {
-                    const response = await axios.get("/api/v1/getUser", {
+                    const response = await axios.get(URL, {
                         headers: {
                             Authorization: header,
                         },
@@ -37,12 +41,23 @@ const Header = () => {
             }
         };
         getUser();
-    }, [token]);
+    }, [token, role]);
 
+    const handleFindJobs = () => {
+        navigate("/jobs");
+    };
+    const handleHome = () => {
+        navigate("/");
+    };
+    const handleRecruiter = () => {
+        navigate("/recruiterSignIn");
+    };
     const handleSignOut = () => {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");
+        sessionStorage.removeItem("role");
+        cookies.remove("role");
         cookies.remove("token");
         setUser(null);
     };
@@ -65,9 +80,9 @@ const Header = () => {
                     }}
                 >
                     <Tabs textColor="inherit">
-                        <Tab label="Home" />
-                        <Tab label="Find Jobs" />
-                        <Tab label="Recruiter" />
+                        <Tab label="Home" onClick={handleHome} />
+                        <Tab label="Find Jobs" onClick={handleFindJobs} />
+                        <Tab label="Recruiter" onClick={handleRecruiter} />
                         <Tab label="About Us" />
                     </Tabs>
                     <Button
@@ -89,38 +104,73 @@ const Header = () => {
                 </div>
             );
         } else {
-            console.log(user);
-            return (
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                    }}
-                >
-                    <Tabs textColor="inherit">
-                        <Tab label="Find Jobs" />
-                        <Tab label="News" />
-                        <Tab label="About Us" />
-                    </Tabs>
-                    <Button
-                        variant="contained"
-                        textColor="inherit"
-                        disableElevation
+            if (!role) {
+                return (
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                        }}
                     >
-                        Welcome, {user.name}
-                    </Button>
-                    <Button
-                        variant="contained"
-                        textColor="inherit"
-                        disableElevation
-                        onClick={handleSignOut}
+                        <Tabs textColor="inherit">
+                            <Tab label="Find Jobs" onClick={handleFindJobs} />
+                            <Tab label="Applications" />
+                            <Tab label="News" />
+                            <Tab label="About Us" />
+                        </Tabs>
+                        <Button
+                            variant="contained"
+                            textColor="inherit"
+                            disableElevation
+                        >
+                            Welcome, {user.name}
+                        </Button>
+                        <Button
+                            variant="contained"
+                            textColor="inherit"
+                            disableElevation
+                            onClick={handleSignOut}
+                        >
+                            SignOut
+                        </Button>
+                    </div>
+                );
+            } else {
+                return (
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                        }}
                     >
-                        SignOut
-                    </Button>
-                </div>
-            );
+                        <Tabs textColor="inherit">
+                            <Tab label="Post Jobs" />
+                            <Tab label="Applications" />
+                            <Tab label="News" />
+                            <Tab label="About Us" />
+                        </Tabs>
+                        <Button
+                            variant="contained"
+                            textColor="inherit"
+                            disableElevation
+                        >
+                            Welcome, {user.name}
+                        </Button>
+                        <Button
+                            variant="contained"
+                            textColor="inherit"
+                            disableElevation
+                            onClick={handleSignOut}
+                        >
+                            SignOut
+                        </Button>
+                    </div>
+                );
+            }
         }
     };
 

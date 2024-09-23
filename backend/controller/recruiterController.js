@@ -11,11 +11,12 @@ const getRecruiters = async (req, res) => {
 };
 const getRecruiterbyID = async (req, res) => {
     try {
-        const Recruiter = await Recruiter.findById(req.params.id);
-        if (!Recruiter) {
+        const recruiterId = req.user.userId;
+        const recruiter = await Recruiter.findById(recruiterId);
+        if (!recruiter) {
             return res.status(404).json({ message: "Recruiter not found" });
         }
-        res.json(Recruiter);
+        res.json(recruiter);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
