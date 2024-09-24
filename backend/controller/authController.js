@@ -38,7 +38,7 @@ const signUp = async (req, res, role) => {
             token,
             userId: user._id,
             name: user.name,
-            emsil: user.email,
+            email: user.email,
             role: role,
         });
     } catch (err) {

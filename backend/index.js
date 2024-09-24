@@ -81,6 +81,12 @@ v1Router.patch("/updateRecruiterData", (req, res) => {
 v1Router.get("/getJob", authentication, (req, res) => {
     jobController.getJobbyID(req, res);
 });
+v1Router.get("/getJobById", (req, res) => {
+    jobController.getJobbyJobID(req, res);
+});
+v1Router.get("/getJobsByIds", (req, res) => {
+    jobController.getJobsbyIDS(req, res);
+});
 v1Router.get("/getJobs", (req, res) => {
     jobController.getJobs(req, res);
 });
@@ -95,16 +101,16 @@ v1Router.delete("/deleteJob", (req, res) => {
 });
 
 //Application Routes
-v1Router.get("/user/getApplication", (req, res) => {
+v1Router.get("/user/getApplication", authentication, (req, res) => {
     applicationController.getApplicationsbyUserID(req, res);
 });
 v1Router.get("/job/getApplication", (req, res) => {
     applicationController.getApplicationsbyJobID(req, res);
 });
-v1Router.post("/postApplication", (req, res) => {
+v1Router.post("/postApplication", authentication, (req, res) => {
     applicationController.postApplication(req, res);
 });
-v1Router.patch("/updateApplication", (req, res) => {
+v1Router.patch("/updateApplication", authentication, (req, res) => {
     applicationController.updateApplication(req, res);
 });
 

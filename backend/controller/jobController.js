@@ -19,6 +19,36 @@ const getJobbyID = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+const getJobbyJobID = async (req, res) => {
+    try {
+        const jobId = req.query.jobId;
+        const job = await Job.find({ _id: jobId });
+        if (!job) {
+            return res.status(404).json({ message: "Job not found" });
+        }
+        res.json(job);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+const getJobsbyIDS = async (req, res) => {
+    try {
+        const jobIds = req.query.jobId;
+
+        const cleanJobId = jobIds.replace(/,]/g, "]");
+
+        const ids = JSON.parse(cleanJobId);
+
+        const jobs = await Job.find({ _id: { $in: ids } });
+        if (!jobs) {
+            return res.status(404).json({ message: "Jobs not found" });
+        }
+        res.json(jobs);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 
 const postJob = async (req, res) => {
     const {
@@ -81,4 +111,12 @@ const deleteJob = async (req, res) => {
     }
 };
 
-module.exports = { getJobs, getJobbyID, postJob, updateJob, deleteJob };
+module.exports = {
+    getJobs,
+    getJobbyID,
+    getJobbyJobID,
+    postJob,
+    updateJob,
+    deleteJob,
+    getJobsbyIDS,
+};
