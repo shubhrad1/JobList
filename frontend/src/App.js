@@ -10,6 +10,8 @@ import Profile from "./components/pages/Profile/Profile";
 import LoginRecruiter from "./components/pages/LoginRecruiter/LoginRecruiter";
 import SignUpRecruiter from "./components/pages/SignUpRecruiter/SignUpRecruiter";
 import PostJobs from "./components/pages/PostJobs/PostJobs";
+import ViewApplication from "./components/pages/Application/ViewApplication";
+import ViewApplicationR from "./components/pages/Application/ViewApplicationRecruiter";
 
 function App() {
     return (
@@ -23,6 +25,14 @@ function App() {
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/postJobs" element={<PostJobs />} />
+                    <Route
+                        path="/myApplications"
+                        element={<ViewApplication />}
+                    />
+                    <Route
+                        path="/recruiterApplications"
+                        element={<ViewApplicationR />}
+                    />
                     <Route
                         path="/recruiterSignIn"
                         element={<LoginRecruiter />}

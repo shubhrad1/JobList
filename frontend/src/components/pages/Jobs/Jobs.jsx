@@ -7,9 +7,11 @@ import {
     CardHeader,
     TextField,
     Typography,
+    Modal,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import CreateApplication from "./CreateApplication";
 
 const Jobs = () => {
     const [jobs, setJobs] = useState([]);
@@ -23,6 +25,37 @@ const Jobs = () => {
     const [location, setLocation] = useState("");
 
     const [filteredJobs, setFilteredJobs] = useState([]);
+
+    const [openCard, setOpenCard] = useState(false);
+
+    const [applicationData, setApplicationData] = useState({});
+
+    const handleCardOpen = (
+        app_id,
+        app_recruiterId,
+        app_position,
+        app_company,
+        app_location,
+        app_salary,
+        app_currency,
+        app_description
+    ) => {
+        setOpenCard(true);
+        setApplicationData({
+            id: app_id,
+            recruiterId: app_recruiterId,
+            position: app_position,
+            company: app_company,
+            location: app_location,
+            salary: app_salary,
+            currency: app_currency,
+            description: app_description,
+        });
+    };
+    const handleCardClose = () => {
+        setOpenCard(false);
+        setApplicationData({});
+    };
 
     const JobCard = ({ job }) => {
         return (
@@ -60,7 +93,22 @@ const Jobs = () => {
                             margin: "10px",
                         }}
                     >
-                        <Button variant="contained" color="primary">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() =>
+                                handleCardOpen(
+                                    job._id,
+                                    job.recruiterId,
+                                    job.position,
+                                    job.company,
+                                    job.location,
+                                    job.salary,
+                                    job.currency,
+                                    job.description
+                                )
+                            }
+                        >
                             Apply
                         </Button>
                         <Button variant="contained" color="secondary">
@@ -165,6 +213,18 @@ const Jobs = () => {
                     Search
                 </Button>
             </div>
+            <Modal
+                open={openCard}
+                onClose={handleCardClose}
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backdropFilter: "blur(5px)",
+                }}
+            >
+                <CreateApplication data={applicationData} />
+            </Modal>
             <div
                 style={{
                     display: "grid",

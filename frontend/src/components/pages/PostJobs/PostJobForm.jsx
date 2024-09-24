@@ -36,15 +36,14 @@ const PostJobView = () => {
                     Authorization: "token " + sessionStorage.getItem("token"),
                 },
             });
-            if (response.status === 201) {
-                alert("Job Posted Successfully");
-                setCompany("");
-                setPosition("");
-                setLocation("");
-                setDescription("");
-                setSalary("");
-                setCurrency("");
-            }
+
+            alert("Job Posted Successfully");
+            setCompany("");
+            setPosition("");
+            setLocation("");
+            setDescription("");
+            setSalary("");
+            setCurrency("");
         } catch (err) {
             console.log(err);
             alert("Job Posting Failed");

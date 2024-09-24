@@ -1,4 +1,4 @@
-import { Button, List, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import React from "react";
 import PostJobForm from "./PostJobForm";
 import ListJobs from "./ListJobs";

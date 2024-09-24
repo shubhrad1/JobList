@@ -66,6 +66,7 @@ const Header = () => {
         sessionStorage.removeItem("role");
         cookies.remove("role");
         cookies.remove("token");
+        navigate("/", { replace: true });
         setUser(null);
     };
     const handleSignIn = () => {
@@ -73,6 +74,15 @@ const Header = () => {
     };
     const handleSignUp = () => {
         navigate("/signup");
+    };
+    const handlePostJobs = () => {
+        navigate("/postJobs");
+    };
+    const handleUserApplication = () => {
+        navigate("/myApplications");
+    };
+    const handleRecruiterApplication = () => {
+        navigate("/recruiterApplications");
     };
 
     const userButtons = () => {
@@ -123,7 +133,10 @@ const Header = () => {
                     >
                         <Tabs textColor="inherit">
                             <Tab label="Find Jobs" onClick={handleFindJobs} />
-                            <Tab label="Applications" />
+                            <Tab
+                                label="Applications"
+                                onClick={handleUserApplication}
+                            />
                             <Tab label="News" />
                             <Tab label="About Us" />
                         </Tabs>
@@ -155,8 +168,11 @@ const Header = () => {
                         }}
                     >
                         <Tabs textColor="inherit">
-                            <Tab label="Post Jobs" />
-                            <Tab label="Applications" />
+                            <Tab label="Post Jobs" onClick={handlePostJobs} />
+                            <Tab
+                                label="Applications"
+                                onClick={handleRecruiterApplication}
+                            />
                             <Tab label="News" />
                             <Tab label="About Us" />
                         </Tabs>
